@@ -2,3 +2,4 @@
 git fetch测试
 git pull测试
 git fetch单独测试
+update功能测试
