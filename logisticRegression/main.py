@@ -1,21 +1,21 @@
 import torch
 
 x_data = torch.Tensor([[1.0], [2.0], [3.0]])
-y_data = torch.Tensor([[2.0], [4.0], [6.0]])
+y_data = torch.Tensor([[0], [0], [1]])
 
 
-class LinearModel(torch.nn.Module):
+class LogisticRegressionModel(torch.nn.Module):
     def __init__(self):
         super(LinearModel, self).__init__()
         self.Linear = torch.nn.Linear(1, 1)
 
     def forward(self, x):
-        y_pred = self.Linear(x)
+        y_pred = torch.sigmoid(self.Linear(x))
         return y_pred
 
 
-model = LinearModel()
-criterion = torch.nn.MSELoss(size_average=False)
+model = LogisticRegressionModel()
+criterion = torch.nn.BCELoss(size_average=False)
 optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 
 for epoch in range(1000):
@@ -30,6 +30,6 @@ for epoch in range(1000):
 print("w=", model.Linear.weight.item())
 print("b=", model.Linear.bias.item())
 
-x_test = torch.Tensor([[4.0]])
+x_test = torch.Tensor([[3.0]])
 y_test = model(x_test)
 print("After training:", y_test.data)
